@@ -1,0 +1,27 @@
+{
+  "name": "timersys/geo-redirects",
+  "description": "WordPress plugin to make geo redirections that works with GeotargetingWP API",
+  "homepage": "https://geotargetingwp.com",
+  "keywords": [
+    "wordpress","geo redirects","geotargeting","geolocation","plugin"
+  ],
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name":"Damian Logghe",
+      "email":"damian@timersys.com",
+      "homepage":"https://timersys.com/"
+    }
+  ],
+  "support"    : {
+    "issues": "https://github.com/timersys/geo-redirects/issues",
+    "source": "https://github.com/timersys/geo-redirects"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "type": "wordpress-plugin",
+  "require": {
+    "timersys/geot-functions": "dev-master",
+    "timersys/geotargetingwp": "dev-master"
+  }
+}
