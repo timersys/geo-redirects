@@ -91,7 +91,8 @@ class Geotr_Helper {
 		if( isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'geotr_nonce') )
 			$is_ajax = true;
 
-		$options = array_merge($defaults, $options);
+		if( is_array($options))
+			$options = array_merge($defaults, $options);
 
 		// Is AJAX call?
 		if( $is_ajax ) {
@@ -110,10 +111,30 @@ class Geotr_Helper {
 
 
 		switch($options['param']) {
+			case "country":
+				$countries = geot_countries();
+				foreach( $countries as $c ) {
+					$choices[$c->iso_code] = $c->country;
+				}
+				break;
+			case "country_region":
+				$regions = geot_country_regions();
+				foreach( $regions as $r ) {
+
+					$choices[$r['name']] = $r['name'];
+				}
+				break;
+			case "city_region":
+				$regions = geot_city_regions();
+				foreach( $regions as $r ) {
+
+					$choices[$r['name']] = $r['name'];
+				}
+				break;
 			case "post_type":
 
 				// all post types except attachment
-				$choices = apply_filters('geotr/get_post_types', array(), array('attachment') );
+				$choices = apply_filters('geotr/get_post_types', get_post_types(), array('attachment') );
 
 				break;
 
@@ -413,24 +434,12 @@ class Geotr_Helper {
 	public static function get_options( $id )
 	{
 		$defaults = array(
-			'css' => array(
-				'position' 			=> 'centered',
-				'bgopacity'			=> '0.5',
-				'background_color'	=> '#eeeeee',
-				'color'				=> '#333',
-				'width'				=> '600px',
-				'border_color'		=> '#555',
-				'border_width'		=> '8',
-			),
-			'trigger'			=> 'seconds',
-			'trigger_number'	=> '5',
-			'animation'			=> 'fade',
-			'cookie'			=> '999',
-			'close-cookie'	    => '30',
-			'auto_hide'			=> 0,
-			'test_mode'			=> 0,
-			'conversion_close'  => '1',
-			'powered_link'      => '0',
+
+			'url'			    => '',
+			'one_time_redirect'	=> '',
+			'exclude_se'		=> '',
+			'whitelist'			=> '',
+			'status'			=> 302,
 		);
 
 		$opts = apply_filters( 'geotr/metaboxes/box_options', get_post_meta( $id, 'geotr_options', true ), $id );

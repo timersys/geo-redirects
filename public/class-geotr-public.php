@@ -9,6 +9,9 @@
  * @package    Geotr
  * @subpackage Geotr/public
  */
+use function GeotFunctions\textarea_to_array;
+use function GeotWP\getUserIP;
+use function GeotWP\is_session_started;
 
 /**
  * @package    Geotr
@@ -17,58 +20,106 @@
  */
 class Geotr_Public {
 
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
+	public function handle_redirects(){
+		global $wp_query,$post;
 
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
+		$post_type = isset( $wp_query->query_vars['post_type'] ) ? $wp_query->query_vars['post_type'] : '';
 
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
-	 */
-	public function __construct( $plugin_name, $version ) {
+		$post_type = empty( $post_type ) ? get_post_type($post->ID) : get_post_type();
 
-		$this->plugin_name = $plugin_name;
-		$this->version = $version;
 
+		var_dump($post_type);die();
+		Geotr_Rules::init();
+		$redirections = $this->get_redirections();
+		if( !empty($redirections) ) {
+			foreach ( $redirections as $r ) {
+				$rules = !empty($r->geotr_rules) ? unserialize($r->geotr_rules) : array();
+				$do_redirect = Geotr_Rules::do_redirection( $rules );
+				if ( $do_redirect )
+					$this->perform_redirect($r);
+			}
+		}
 	}
 
 	/**
-	 * Register the stylesheets for the public-facing side of the site.
-	 *
-	 * @since    1.0.0
+	 * Grab all redirections posts and associated rules
+	 * @return mixed
 	 */
-	public function enqueue_styles() {
+	private function get_redirections() {
+		global $wpdb;
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/geotr-public.css', array(), $this->version, 'all' );
+		$sql = "SELECT ID, 
+		MAX(CASE WHEN pm1.meta_key = 'geotr_rules' then pm1.meta_value ELSE NULL END) as geotr_rules,
+		MAX(CASE WHEN pm1.meta_key = 'geotr_options' then pm1.meta_value ELSE NULL END) as geotr_options
+        FROM $wpdb->posts p LEFT JOIN $wpdb->postmeta pm1 ON ( pm1.post_id = p.ID)  WHERE post_type='geotr_cpt' AND post_status='publish' GROUP BY p.ID";
 
+		$redirections = wp_cache_get(md5($sql), 'geotr_posts');
+		if( $redirections === false) {
+			$redirections = $wpdb->get_results($sql, OBJECT );
+			wp_cache_add (md5($sql), $redirections, 'geotr_posts');
+		}
+		return $redirections;
 	}
 
 	/**
-	 * Register the stylesheets for the public-facing side of the site.
-	 *
-	 * @since    1.0.0
+	 * Perform the actual redirection
+	 * @param $redirection
 	 */
-	public function enqueue_scripts() {
+	private function perform_redirect( $redirection ) {
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geotr-public.js', array( 'jquery' ), $this->version, false );
+		if( empty( $redirection->geotr_options ) )
+			return;
 
+		$opts = maybe_unserialize($redirection->geotr_options);
+
+		if( empty( $opts['url'] ) )
+			return;
+
+		// check user IP
+		if( !empty($opts['whitelist']) && $this->user_is_whitelisted( $opts['whitelist'] ) )
+			return;
+
+		// redirect one time uses cookies
+		if( (int)$opts['one_time_redirect'] === 1 ){
+			if( isset( $_COOKIE['geotr_redirect_'.$redirection->ID]) )
+				return;
+			setcookie( 'geotr_redirect_'.$redirection->ID, true, time() + apply_filters('geotr/cookie_expiration', YEAR_IN_SECONDS),'/');
+		}
+
+		// redirect 1 per session
+		if( (int)$opts['one_time_redirect'] === 2 ){
+			if( ! is_session_started() )
+				session_start();
+
+			if( isset( $_SESSION['geotr_redirect_'.$redirection->ID]) )
+				return;
+			$_SESSION['geotr_redirect_'.$redirection->ID] = true;
+		}
+
+		// status code is set?
+		if( !isset($opts['status']) || ! is_numeric($opts['status']))
+			$opts['status'] = 302;
+
+		echo '<pre>';
+		var_dump($opts);
+		echo '</pre>';
+		die();
+		#wp_redirect($opts['url'], $opts['status']);
+		exit;
+	}
+
+	/**
+	 * Check if current user IP is whitelisted
+	 *
+	 * @param $ips
+	 *
+	 * @return bool
+	 */
+	private function user_is_whitelisted( $ips ) {
+		$ips = textarea_to_array( $ips );
+		if( in_array( getUserIP(), apply_filters( 'geotr/whitelist_ips', $ips ) ) )
+			return true;
+		return false;
 	}
 
 }
