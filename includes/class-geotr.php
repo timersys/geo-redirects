@@ -233,8 +233,9 @@ class Geotr {
 	private function define_public_hooks() {
 
 		$this->public = new Geotr_Public();
-
-		add_action( 'wp', array( $this->public, 'handle_redirects' ) );
+		$action_hook = defined('WP_CACHE') ? 'init' : 'wp';
+		if( ! is_admin() && ! defined('DOING_AJAX') && ! defined('DOING_CRON') )
+			add_action( $action_hook, array( $this->public, 'handle_redirects' ) );
 
 	}
 

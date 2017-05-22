@@ -21,14 +21,7 @@ use function GeotWP\is_session_started;
 class Geotr_Public {
 
 	public function handle_redirects(){
-		global $wp_query,$post;
 
-		$post_type = isset( $wp_query->query_vars['post_type'] ) ? $wp_query->query_vars['post_type'] : '';
-
-		$post_type = empty( $post_type ) ? get_post_type($post->ID) : get_post_type();
-
-
-		var_dump($post_type);die();
 		Geotr_Rules::init();
 		$redirections = $this->get_redirections();
 		if( !empty($redirections) ) {
@@ -100,12 +93,11 @@ class Geotr_Public {
 		if( !isset($opts['status']) || ! is_numeric($opts['status']))
 			$opts['status'] = 302;
 
-		echo '<pre>';
-		var_dump($opts);
-		echo '</pre>';
-		die();
-		#wp_redirect($opts['url'], $opts['status']);
-		exit;
+		//last chance to abort
+		if( ! apply_filters('geotr/cancel_redirect', false, $opts, $redirection) ) {
+			wp_redirect($opts['url'], $opts['status']);
+			exit;
+		}
 	}
 
 	/**
