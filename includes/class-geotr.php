@@ -153,7 +153,7 @@ class Geotr {
 	 * @access   private
 	 */
 	private function load_dependencies() {
-
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/autoload.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-geotr-i18n.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-geotr-rules.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-geotr-helper.php';
@@ -211,7 +211,8 @@ class Geotr {
 		Geotr_Rules::set_rules_fields();
 
 		add_filter( 'plugin_action_links_' . GEOTR_PLUGIN_HOOK, array( $this->admin, 'add_action_links' ) );
-		add_action( 'add_meta_boxes', array( $metaboxes, 'add_meta_boxes' ) );
+		add_action( 'add_meta_boxes_geotr_cpt', array( $metaboxes, 'add_meta_boxes' ) );
+		add_action( 'save_post_geotr_cpt', array( $metaboxes, 'save_meta_options' ) );
 
 		add_action( 'admin_enqueue_scripts', array( $this->admin, 'enqueue_scripts' ) );
 
@@ -231,10 +232,10 @@ class Geotr {
 	 */
 	private function define_public_hooks() {
 
-		$this->public = new Geotr_Public( $this->get_plugin_name(), $this->get_version() );
-
-	#	add_action( 'wp_enqueue_scripts', array( $this->public, 'enqueue_styles' ) );
-	#	add_action( 'wp_enqueue_scripts', array( $this->public, 'enqueue_scripts' ) );
+		$this->public = new Geotr_Public();
+		$action_hook = defined('WP_CACHE') ? 'init' : 'wp';
+		if( ! is_admin() && ! defined('DOING_AJAX') && ! defined('DOING_CRON') )
+			add_action( $action_hook, array( $this->public, 'handle_redirects' ) );
 
 	}
 
@@ -269,15 +270,15 @@ class Geotr {
 
 		$labels = array(
 			'name'               => 'Geo Redirects v'.GEOTR_VERSION,
-			'singular_name'      => _x( 'Geo Redirections', 'post type singular name', 'popups' ),
-			'menu_name'          => _x( 'Geo Redirections', 'admin menu', 'popups' ),
-			'name_admin_bar'     => _x( 'Geo Redirections', 'add new on admin bar', 'popups' ),
+			'singular_name'      => _x( 'Geo Redirects', 'post type singular name', 'popups' ),
+			'menu_name'          => _x( 'Geo Redirects', 'admin menu', 'popups' ),
+			'name_admin_bar'     => _x( 'Geo Redirects', 'add new on admin bar', 'popups' ),
 			'add_new'            => _x( 'Add New', 'Geo Redirection', 'popups' ),
 			'add_new_item'       => __( 'Add New Geo Redirection', 'popups' ),
 			'new_item'           => __( 'New Geo Redirection', 'popups' ),
 			'edit_item'          => __( 'Edit Geo Redirection', 'popups' ),
 			'view_item'          => __( 'View Geo Redirection', 'popups' ),
-			'all_items'          => __( 'All Geo Redirection', 'popups' ),
+			'all_items'          => __( 'Geo Redirects', 'popups' ),
 			'search_items'       => __( 'Search Geo Redirection', 'popups' ),
 			'parent_item_colon'  => __( 'Parent Geo Redirection:', 'popups' ),
 			'not_found'          => __( 'No Geo Redirection found.', 'popups' ),
@@ -289,7 +290,7 @@ class Geotr {
 			'public'             => false,
 			'publicly_queryable' => true,
 			'show_ui'            => true,
-			'show_in_menu'       => true,
+			'show_in_menu'       => 'geot-settings',
 			'query_var'          => true,
 			'rewrite'            => array( 'slug' => 'geotr_cpt' ),
 			'capability_type'    => 'post',
@@ -306,8 +307,7 @@ class Geotr {
 		    ),
 			'has_archive'        => false,
 			'hierarchical'       => false,
-			'menu_position'      => null,
-			'menu_icon'			 => 'dashicons-admin-site',
+			'menu_position'      => 10,
 			'supports'           => array( 'title' )
 		);
 

@@ -7,7 +7,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Geo Redirects
- * Plugin URI:        https://timersys.com/geo-redirects/
+ * Plugin URI:        https://geotargetingwp/
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
  * Author:            Damian Logghe

@@ -1,5 +1,5 @@
 <?php
-
+//TODO add custom columsn to post type to show redirect settings
 /**
  * The admin-specific functionality of the plugin.
  *

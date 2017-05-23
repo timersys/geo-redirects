@@ -22,7 +22,7 @@ if ( !defined( 'ABSPATH' ) ) exit;?>
                 <option value="1" <?php selected($opts['one_time_redirect'], '1'); ?> > <?php _e( 'Yes', 'geotr' ); ?></option>
 				<option value="2" <?php selected($opts['one_time_redirect'], '2'); ?> > <?php _e( 'Yes, one per user session', 'geotr' ); ?></option>
 			</select>
-            <p class="help"><?php _e( 'Select ig user will be redirected everytime, once per session or only once', 'geotr' ); ?></p>
+            <p class="help"><?php _e( 'Select if user will be redirected every time, once per browser session or only once in total', 'geotr' ); ?></p>
 		</td>
 	</tr>
 
@@ -37,6 +37,13 @@ if ( !defined( 'ABSPATH' ) ) exit;?>
 		</td>
 	</tr>
 
+    <tr valign="top">
+		<th><label for="geotr_trigger"><?php _e( 'Redirection code?', 'geotr' ); ?></label></th>
+		<td>
+			<input type="text"  name="geotr[status]" value="<?php echo esc_attr($opts['status']); ?>" placeholder="302"/>
+            <p class="help"><?php _e( 'Add redirection code. Default to 302', 'geotr' ); ?></p>
+		</td>
+	</tr>
     <tr valign="top">
 		<th><label for="geotr_trigger"><?php _e( 'IP Whitelist', 'geotr' ); ?></label></th>
 		<td>

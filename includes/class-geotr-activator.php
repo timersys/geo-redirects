@@ -30,7 +30,7 @@ class Geotr_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
+		do_action('geotWP/activated');
 	}
 
 }

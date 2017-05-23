@@ -30,7 +30,7 @@ class Geotr_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-
+		do_action('geotWP/deactivated');
 	}
 
 }

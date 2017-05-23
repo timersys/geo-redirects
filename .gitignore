@@ -18,4 +18,4 @@ composer.lock
 .svn/
 .idea
 .mmdb
-
+.studio
