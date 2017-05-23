@@ -1,6 +1,6 @@
 {
   "name": "timersys/geo-redirects",
-  "description": "WordPress plugin to make geo redirections that works with GeotargetingWP API",
+  "description": "WordPress plugin to make geo redirects that works with GeotargetingWP API",
   "homepage": "https://geotargetingwp.com",
   "keywords": [
     "wordpress","geo redirects","geotargeting","geolocation","plugin"
