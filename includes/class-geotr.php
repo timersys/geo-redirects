@@ -12,6 +12,7 @@
  * @package    Geotr
  * @subpackage Geotr/includes
  */
+use GeotFunctions\Setting\GeotSettings;
 
 /**
  * The core plugin class.
@@ -140,6 +141,7 @@ class Geotr {
 		$this->version = GEOTR_VERSION;
 
 		$this->load_dependencies();
+		GeotSettings::init();
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_global_hooks();
