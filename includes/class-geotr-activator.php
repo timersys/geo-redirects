@@ -30,6 +30,7 @@ class Geotr_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
+		GeotFunctions\add_countries_to_db();
 		do_action('geotWP/activated');
 	}
 
