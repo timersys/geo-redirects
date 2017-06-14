@@ -534,10 +534,10 @@ class Geotr_Rules {
 			}
 
 			if ( $rule['operator'] == "==" ) {
-				return (home_url() == get_current_url());
+				return (home_url() == \GeotFunctions\get_current_url());
 			}
 
-			return ! (home_url() == get_current_url());
+			return ! (home_url() == \GeotFunctions\get_current_url());
 
 
 		} elseif ( $rule['value'] == 'category_page' ) {
