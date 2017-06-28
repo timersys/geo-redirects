@@ -28,6 +28,8 @@ define( 'GEOTR_PLUGIN_FILE' , __FILE__);
 define( 'GEOTR_DIR', dirname(__FILE__));
 define( 'GEOTR_URL', plugin_dir_url(__FILE__));
 define( 'GEOTR_PLUGIN_HOOK' , basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ) );
+if( !defined('GEOTROOT_PLUGIN_FILE'))
+	define( 'GEOTROOT_PLUGIN_FILE', GEOTR_PLUGIN_FILE );
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-geotr-activator.php

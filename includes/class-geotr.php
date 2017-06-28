@@ -222,6 +222,8 @@ class Geotr {
 		add_action('wp_ajax_geotr/field_group/render_rules', array( 'Geotr_Helper', 'ajax_render_rules' ) );
 		add_action('wp_ajax_geotr/field_group/render_operator', array( 'Geotr_Helper', 'ajax_render_operator' ) );
 
+		add_filter( 'manage_edit-geotr_cpt_columns' ,  array( $this->admin, 'set_custom_cpt_columns'), 10, 2 );
+		add_action( 'manage_geotr_cpt_posts_custom_column' ,  array( $this->admin, 'custom_columns'), 10, 2 );
 
 	}
 
