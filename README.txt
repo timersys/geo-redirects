@@ -2,8 +2,8 @@
 Contributors: timersys
 Donate link: https://timersys.com
 Tags: geo redirects, geo redirection, redirect by country, geotargeting, geolite, maxmind
-Tested up to: 6.1
-Stable tag: 1.0.0
+Tested up to: 4.8
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,11 @@ Rules available:
 
 
 == Changelog ==
+
+= 1.0.1 =
+* Fixed admin assets not loaded if geotargeting pro was not installed
+* Fixed countries not loaded if geotargeting pro was not installed
+* Added redirect url to redirection list 
 
 = 1.0.0 =
 * First version
