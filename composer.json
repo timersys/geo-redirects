@@ -22,7 +22,6 @@
   "type": "wordpress-plugin",
   "require": {
     "timersys/geot-functions": "dev-master",
-    "timersys/geotargetingwp": "dev-master",
     "mobiledetect/mobiledetectlib": "^2.8"
   }
 }

@@ -237,12 +237,13 @@ class Geotr_Rules {
 	public static function rule_match_state( $rule ) {
 
 		$state = geot_state_name();
+		$state_code = geot_state_code();
 
 		if ( $rule['operator'] == "==" ) {
-			return ( strtolower($state) == strtolower($rule['value']) );
+			return ( strtolower($state) == strtolower($rule['value']) || strtolower($state_code) == strtolower($rule['value']) );
 		}
 
-		return ! ( strtolower($state) == strtolower($rule['value']) );
+		return ! ( strtolower($state) == strtolower($rule['value']) || strtolower($state_code) == strtolower($rule['value']) );
 
 	}
 
