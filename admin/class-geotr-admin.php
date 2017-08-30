@@ -9,6 +9,7 @@
  * @package    Geotr
  * @subpackage Geotr/admin
  */
+use GeotFunctions\GeotUpdates;
 
 /**
  * @subpackage Geotr/admin
@@ -113,6 +114,20 @@ class Geotr_Admin {
 				echo esc_attr($opts['url']);
 				break;
 		}
+	}
+
+	/**
+	 * Handle Licences and updates
+	 * @since 1.0.0
+	 */
+	public function handle_updates(){
+		$opts = geot_settings();
+		// Setup the updater
+		return new GeotUpdates( GEOTR_PLUGIN_FILE, [
+				'version'   => $this->version,
+				'license'   => isset($opts['license']) ?$opts['license'] : ''
+			]
+		);
 	}
 
 	/**

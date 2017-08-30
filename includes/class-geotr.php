@@ -225,6 +225,9 @@ class Geotr {
 		add_filter( 'manage_edit-geotr_cpt_columns' ,  array( $this->admin, 'set_custom_cpt_columns'), 10, 2 );
 		add_action( 'manage_geotr_cpt_posts_custom_column' ,  array( $this->admin, 'custom_columns'), 10, 2 );
 
+		// License and Updates
+		add_action( 'admin_init' , [ $this->admin, 'handle_updates'], 0 );
+
 	}
 
 	/**
