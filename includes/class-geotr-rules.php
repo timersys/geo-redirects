@@ -78,6 +78,9 @@ class Geotr_Rules {
 					$match = apply_filters( 'geotr/rules/rule_match/' . $rule['param'], $rule );
 					if ( ! $match ) {
 						$match_group = false;
+						// if one rule fails we don't need to check the rest of the rules in the group
+						// that way if we add geo rules down it won't get executed and will save credits
+						break;
 					}
 				}
 			}
