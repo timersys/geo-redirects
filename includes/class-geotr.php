@@ -241,9 +241,18 @@ class Geotr {
 
 		$this->public = new Geotr_Public();
 		$action_hook = defined('WP_CACHE') ? 'init' : 'wp';
-		if( ! is_admin() && ! defined('DOING_AJAX') && ! defined('DOING_CRON') )
+		if( ! is_admin() && ! $this->is_backend() && ! defined('DOING_AJAX') && ! defined('DOING_CRON') )
 			add_action( $action_hook, array( $this->public, 'handle_redirects' ) );
 
+	}
+
+	/**
+	 * Check if we are trying to login
+	 * @return bool
+	 */
+	private function is_backend(){
+		$ABSPATH_MY = str_replace(array('\\','/'), DIRECTORY_SEPARATOR, ABSPATH);
+		return ((in_array($ABSPATH_MY.'wp-login.php', get_included_files()) || in_array($ABSPATH_MY.'wp-register.php', get_included_files()) ) || $GLOBALS['pagenow'] === 'wp-login.php' || $_SERVER['PHP_SELF']== '/wp-login.php');
 	}
 
 
