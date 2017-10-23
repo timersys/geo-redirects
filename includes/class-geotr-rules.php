@@ -12,6 +12,9 @@ class Geotr_Rules {
 	private static $detect;
 	private static $referrer;
 	private static $query_string;
+	private static $is_category;
+	private static $is_archive;
+	private static $is_search;
 
 	public static function init() {
 
@@ -20,6 +23,27 @@ class Geotr_Rules {
 		self::$referrer     = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : '';
 		self::$query_string = isset( $_SERVER['QUERY_STRING'] ) ? $_SERVER['QUERY_STRING'] : '';
 
+		if( defined('DOING_AJAX') ) {
+
+			if ( isset( $_REQUEST['pid'] ) ) {
+				self::$post_id = $_REQUEST['pid'];
+			}
+			if( !empty( $_REQUEST['referrer'] ) ) {
+				self::$referrer = $_REQUEST['referrer'];
+			}
+			if( !empty( $_REQUEST['query_string'] ) ) {
+				self::$query_string = $_REQUEST['query_string'];
+			}
+			if( !empty( $_REQUEST['is_category'] ) ) {
+				self::$is_category = true;
+			}
+			if( !empty( $_REQUEST['is_archive'] ) ) {
+				self::$is_archive = true;
+			}
+			if( !empty( $_REQUEST['is_search'] ) ) {
+				self::$is_search = true;
+			}
+		}
 		// Geotargeting
 		add_filter( 'geotr/rules/rule_match/country', array( self::class, 'rule_match_country' ) );
 		add_filter( 'geotr/rules/rule_match/country_region', array( self::class, 'rule_match_country_region' ) );

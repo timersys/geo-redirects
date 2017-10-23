@@ -1,0 +1,376 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Geo Redirects\n"
+"POT-Creation-Date: 2017-10-18 18:30-0300\n"
+"PO-Revision-Date: 2017-10-18 18:30-0300\n"
+"Last-Translator: \n"
+"Language-Team: GeotargetingWP <hello@geotargetingwp.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: vendor\n"
+
+#: admin/class-geotr-admin.php:75 admin/partials/metaboxes/rules.php:34
+#: admin/partials/metaboxes/rules.php:97
+msgid "OR"
+msgstr ""
+
+#: admin/class-geotr-admin.php:92
+msgid "Create Redirection"
+msgstr ""
+
+#: admin/class-geotr-admin.php:146 admin/partials/metaboxes/opts.php:10
+msgid "Destination URL"
+msgstr ""
+
+#: admin/includes/class-geotr-metaboxes.php:60
+msgid "Redirection Rules"
+msgstr ""
+
+#: admin/includes/class-geotr-metaboxes.php:68
+msgid "Redirection Options"
+msgstr ""
+
+#: admin/partials/metaboxes/opts.php:13
+msgid ""
+"Enter redirection url. You can create dynamic urls by using placeholders "
+"like [requested-uri] "
+msgstr ""
+
+#: admin/partials/metaboxes/opts.php:18
+msgid "One time redirect ?"
+msgstr ""
+
+#: admin/partials/metaboxes/opts.php:21 admin/partials/metaboxes/opts.php:33
+#: admin/partials/metaboxes/opts.php:58
+msgid "No"
+msgstr ""
+
+#: admin/partials/metaboxes/opts.php:22 admin/partials/metaboxes/opts.php:34
+#: admin/partials/metaboxes/opts.php:59
+msgid "Yes"
+msgstr ""
+
+#: admin/partials/metaboxes/opts.php:23
+msgid "Yes, one per user session"
+msgstr ""
+
+#: admin/partials/metaboxes/opts.php:25
+msgid ""
+"Select if user will be redirected every time, once per browser session or "
+"only once in total"
+msgstr ""
+
+#: admin/partials/metaboxes/opts.php:30
+msgid "Exclude Search Engines ?"
+msgstr ""
+
+#: admin/partials/metaboxes/opts.php:36
+msgid "Exclude bots and crawlers from being redirected"
+msgstr ""
+
+#: admin/partials/metaboxes/opts.php:41
+msgid "Redirection code?"
+msgstr ""
+
+#: admin/partials/metaboxes/opts.php:44
+msgid "Add redirection code. Default to 302"
+msgstr ""
+
+#: admin/partials/metaboxes/opts.php:48
+msgid "IP Whitelist"
+msgstr ""
+
+#: admin/partials/metaboxes/opts.php:51
+msgid "Exclude the following IPs from being redirected. Enter one per line"
+msgstr ""
+
+#: admin/partials/metaboxes/opts.php:55
+msgid "After load redirect?"
+msgstr ""
+
+#: admin/partials/metaboxes/opts.php:61
+msgid ""
+"Once page are loaded an AJAX request will be made to check if redirect is "
+"needed."
+msgstr ""
+
+#: admin/partials/metaboxes/rules.php:20
+msgid "Rules"
+msgstr ""
+
+#: admin/partials/metaboxes/rules.php:21
+msgid "Create a set of rules to determine where the popup will show"
+msgstr ""
+
+#: admin/partials/metaboxes/rules.php:32
+msgid "Perform redirect if"
+msgstr ""
+
+#: admin/partials/metaboxes/rules.php:84
+msgid "+ AND"
+msgstr ""
+
+#: admin/partials/metaboxes/rules.php:99
+msgid "Add rule group (+ OR)"
+msgstr ""
+
+#: admin/partials/metaboxes/rules.php:102
+msgid ""
+"Redirection rules marked with an asterisk won't work if you are using page "
+"cache plugin. <strong>Cache plugin detected:</strong>"
+msgstr ""
+
+#: admin/partials/metaboxes/rules.php:102
+msgid "true"
+msgstr ""
+
+#: admin/partials/metaboxes/rules.php:102
+msgid "false"
+msgstr ""
+
+#: admin/partials/metaboxes/rules.php:103
+#, php-format
+msgid ""
+"Learn more about redirections and compatible cache plugins <a href=\"%s\" "
+"target=\"_blank\">here</a>"
+msgstr ""
+
+#: includes/class-geotr-helper.php:48
+msgid "is equal to"
+msgstr ""
+
+#: includes/class-geotr-helper.php:49
+msgid "is not equal to"
+msgstr ""
+
+#: includes/class-geotr-helper.php:53
+msgid "less than"
+msgstr ""
+
+#: includes/class-geotr-helper.php:54
+msgid "greater than"
+msgstr ""
+
+#: includes/class-geotr-helper.php:199
+msgid "All Pages"
+msgstr ""
+
+#: includes/class-geotr-helper.php:200
+msgid "Front Page"
+msgstr ""
+
+#: includes/class-geotr-helper.php:201
+msgid "Posts Page"
+msgstr ""
+
+#: includes/class-geotr-helper.php:202
+msgid "Category Page"
+msgstr ""
+
+#: includes/class-geotr-helper.php:203
+msgid "Search Page"
+msgstr ""
+
+#: includes/class-geotr-helper.php:204
+msgid "Archives Page"
+msgstr ""
+
+#: includes/class-geotr-helper.php:205
+msgid "Top Level Page (parent of 0)"
+msgstr ""
+
+#: includes/class-geotr-helper.php:206
+msgid "Parent Page (has children)"
+msgstr ""
+
+#: includes/class-geotr-helper.php:207
+msgid "Child Page (has parent)"
+msgstr ""
+
+#: includes/class-geotr-helper.php:215
+msgid "Default Template"
+msgstr ""
+
+#: includes/class-geotr-helper.php:299
+msgid "Super Admin"
+msgstr ""
+
+#: includes/class-geotr-helper.php:321
+msgid "True"
+msgstr ""
+
+#: includes/class-geotr-rules.php:145
+msgid "Geotargeting"
+msgstr ""
+
+#: includes/class-geotr-rules.php:146
+msgid "Country"
+msgstr ""
+
+#: includes/class-geotr-rules.php:147
+msgid "Country Region"
+msgstr ""
+
+#: includes/class-geotr-rules.php:148
+msgid "City"
+msgstr ""
+
+#: includes/class-geotr-rules.php:149
+msgid "City Region"
+msgstr ""
+
+#: includes/class-geotr-rules.php:150
+msgid "State"
+msgstr ""
+
+#: includes/class-geotr-rules.php:152
+msgid "User"
+msgstr ""
+
+#: includes/class-geotr-rules.php:153
+msgid "User role"
+msgstr ""
+
+#: includes/class-geotr-rules.php:154
+msgid "User is logged"
+msgstr ""
+
+#: includes/class-geotr-rules.php:155
+msgid "User never left a comment"
+msgstr ""
+
+#: includes/class-geotr-rules.php:156
+msgid "User came via a search engine"
+msgstr ""
+
+#: includes/class-geotr-rules.php:157
+msgid "User did not arrive via another page on your site"
+msgstr ""
+
+#: includes/class-geotr-rules.php:159 includes/class-geotr-rules.php:160
+msgid "Post"
+msgstr ""
+
+#: includes/class-geotr-rules.php:161
+msgid "Post ID"
+msgstr ""
+
+#: includes/class-geotr-rules.php:162
+msgid "Post Type"
+msgstr ""
+
+#: includes/class-geotr-rules.php:163
+msgid "Post Category"
+msgstr ""
+
+#: includes/class-geotr-rules.php:164
+msgid "Post Format"
+msgstr ""
+
+#: includes/class-geotr-rules.php:165
+msgid "Post Status"
+msgstr ""
+
+#: includes/class-geotr-rules.php:166
+msgid "Post Taxonomy"
+msgstr ""
+
+#: includes/class-geotr-rules.php:168 includes/class-geotr-rules.php:169
+msgid "Page"
+msgstr ""
+
+#: includes/class-geotr-rules.php:170
+msgid "Page Type"
+msgstr ""
+
+#: includes/class-geotr-rules.php:171
+msgid "Page Parent"
+msgstr ""
+
+#: includes/class-geotr-rules.php:172
+msgid "Page Template"
+msgstr ""
+
+#: includes/class-geotr-rules.php:174
+msgid "Other"
+msgstr ""
+
+#: includes/class-geotr-rules.php:175
+msgid "Custom Url"
+msgstr ""
+
+#: includes/class-geotr-rules.php:176
+msgid "Referrer"
+msgstr ""
+
+#: includes/class-geotr-rules.php:177
+msgid "Query String"
+msgstr ""
+
+#: includes/class-geotr-rules.php:178
+msgid "Mobile Phone"
+msgstr ""
+
+#: includes/class-geotr-rules.php:179
+msgid "Tablet"
+msgstr ""
+
+#: includes/class-geotr-rules.php:180
+msgid "Dekstop"
+msgstr ""
+
+#: includes/class-geotr-rules.php:181
+msgid "Bots/Crawlers"
+msgstr ""
+
+#: includes/class-geotr.php:106 includes/class-geotr.php:114
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: includes/class-geotr.php:293
+msgid "Add New Geo Redirection"
+msgstr ""
+
+#: includes/class-geotr.php:294
+msgid "New Geo Redirection"
+msgstr ""
+
+#: includes/class-geotr.php:295
+msgid "Edit Geo Redirection"
+msgstr ""
+
+#: includes/class-geotr.php:296
+msgid "View Geo Redirection"
+msgstr ""
+
+#: includes/class-geotr.php:297
+msgid "Geo Redirects"
+msgstr ""
+
+#: includes/class-geotr.php:298
+msgid "Search Geo Redirection"
+msgstr ""
+
+#: includes/class-geotr.php:299
+msgid "Parent Geo Redirection:"
+msgstr ""
+
+#: includes/class-geotr.php:300
+msgid "No Geo Redirection found."
+msgstr ""
+
+#: includes/class-geotr.php:301
+msgid "No Geo Redirection found in Trash."
+msgstr ""
+
+#: public/class-geotr-public.php:151
+msgid "Please wait while you are redirected to the right page..."
+msgstr ""

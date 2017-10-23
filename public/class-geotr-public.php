@@ -19,19 +19,51 @@ use function GeotWP\is_session_started;
  * @author     Damian Logghe <damian@timersys.com>
  */
 class Geotr_Public {
+	/**
+	 * @var Array of Redirection posts
+	 */
+	private $redirections;
 
 	public function handle_redirects(){
 
 		Geotr_Rules::init();
-		$redirections = $this->get_redirections();
-		if( !empty($redirections) ) {
-			foreach ( $redirections as $r ) {
+		$this->redirections = $this->get_redirections();
+		$opts = geotr_settings();
+		if( !empty( $opts['ajax_mode'] ) )
+			add_action( 'wp_footer', [ 'Geotr_Public', 'ajax_placeholder' ] );
+		else
+			$this->check_for_rules();
+	}
+
+
+	/**
+	 * Check for rules and redirect if needed
+	 * This will be normal behaviour on site where cache is not active
+	 */
+	private function check_for_rules() {
+		if( !empty($this->redirections) ) {
+			foreach ( $this->redirections as $r ) {
 				$rules = !empty($r->geotr_rules) ? unserialize($r->geotr_rules) : array();
 				$do_redirect = Geotr_Rules::do_redirection( $rules );
 				if ( $do_redirect )
 					$this->perform_redirect($r);
 			}
 		}
+	}
+
+	/**
+	* Handle Ajax call for redirections, Basically
+	 * we call normal redirect logic but cancel it and print results
+	*/
+	public function handle_ajax_redirects(){
+		Geotr_Rules::init();
+		$this->redirections = $this->get_redirections();
+		add_filter('geotr/cancel_redirect', function( $redirect, $opts){
+			echo apply_filters( 'geotr/ajax_cancel_redirect',json_encode($opts), $opts);
+			return true;
+		},15, 3);
+		$this->check_for_rules();
+		die();
 	}
 
 	/**
@@ -99,6 +131,21 @@ class Geotr_Public {
 			exit;
 		}
 	}
+	/**
+	 * Enqueue script file
+	 */
+	public function enqueue_scripts(){
+		wp_enqueue_script( 'geotr-js',  plugins_url( 'js/geotr-public.js', __FILE__ ), array( 'jquery' ), GEOTR_VERSION, true );
+		wp_localize_script( 'geotr-js', 'geotr', [
+			'ajax_url'						=> admin_url('admin-ajax.php'),
+			'pid'						    => get_queried_object_id(),
+			'is_front_page'				    => is_front_page(),
+			'is_category'				    => is_category(),
+			'site_url'				        => site_url(),
+			'is_archive'				    => is_archive(),
+			'is_search'				        => is_search()
+		]);
+	}
 
 	/**
 	 * Check if current user IP is whitelisted
@@ -114,4 +161,45 @@ class Geotr_Public {
 		return false;
 	}
 
+	/**
+	 * Print placeholder in front end
+	 */
+	public function ajax_placeholder(){
+		?><!-- Geo Redirects plugin https://geotargetingwp.com-->
+		<div class="geotr-ajax" style="display: none">
+			<div>
+				<img src="<?php echo plugin_dir_url(__FILE__);?>img/loading.svg" alt="loading"/>
+				<?php _e('Please wait while you are redirected to the right page...', 'geotr');?>
+			</div>
+		</div>
+		<style>
+			.geotr-ajax{
+				position: fixed;
+				width: 100%;
+				height: 100%;
+				background: #fff;
+				top: 0;
+				left: 0;
+				z-index: 9999999999;
+				color: #000;
+			}
+			.geotr-ajax img{
+				display: block;
+				margin: auto;
+			}
+			.geotr-ajax div{
+				position: absolute;
+				top:0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				margin: auto;
+				width: 320px;
+				height: 140px;
+				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+				text-align: center;
+			}
+		</style>
+		<?php
+	}
 }

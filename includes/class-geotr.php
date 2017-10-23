@@ -156,6 +156,7 @@ class Geotr {
 	 */
 	private function load_dependencies() {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/autoload.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/functions.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-geotr-i18n.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-geotr-rules.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-geotr-helper.php';
@@ -218,6 +219,10 @@ class Geotr {
 
 		add_action( 'admin_enqueue_scripts', array( $this->admin, 'enqueue_scripts' ) );
 
+		// Settings
+		add_action( 'admin_menu' , [ $this->admin, 'add_settings_menu' ],8);
+		add_action( 'admin_init', [ $this->admin, 'save_settings' ] );
+
 		//AJAX Actions
 		add_action('wp_ajax_geotr/field_group/render_rules', array( 'Geotr_Helper', 'ajax_render_rules' ) );
 		add_action('wp_ajax_geotr/field_group/render_operator', array( 'Geotr_Helper', 'ajax_render_operator' ) );
@@ -243,7 +248,9 @@ class Geotr {
 		$action_hook = defined('WP_CACHE') ? 'init' : 'wp';
 		if( ! is_admin() && ! $this->is_backend() && ! defined('DOING_AJAX') && ! defined('DOING_CRON') )
 			add_action( $action_hook, array( $this->public, 'handle_redirects' ) );
-
+		add_action( 'wp_enqueue_scripts', array( $this->public, 'enqueue_scripts' ) );
+		add_action( 'wp_ajax_nopriv_geo_redirects', array( $this->public, 'handle_ajax_redirects' ),1 );
+		add_action( 'wp_ajax_geo_redirects', array( $this->public, 'handle_ajax_redirects' ),1 );
 	}
 
 	/**
