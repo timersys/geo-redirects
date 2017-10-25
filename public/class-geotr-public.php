@@ -43,6 +43,8 @@ class Geotr_Public {
 	private function check_for_rules() {
 		if( !empty($this->redirections) ) {
 			foreach ( $this->redirections as $r ) {
+				if( ! $this->pass_basic_rules($r) )
+					continue;
 				$rules = !empty($r->geotr_rules) ? unserialize($r->geotr_rules) : array();
 				$do_redirect = Geotr_Rules::do_redirection( $rules );
 				if ( $do_redirect )
@@ -87,23 +89,34 @@ class Geotr_Public {
 	}
 
 	/**
-	 * Perform the actual redirection
+	 * Before Even checking rules, we need some basic validation
+	 *
 	 * @param $redirection
+	 *
+	 * @return bool
 	 */
-	private function perform_redirect( $redirection ) {
-
+	private function pass_basic_rules( $redirection ) {
 		if( empty( $redirection->geotr_options ) )
-			return;
+			return false;
 
 		$opts = maybe_unserialize($redirection->geotr_options);
 
 		if( empty( $opts['url'] ) )
-			return;
+			return false;
 
 		// check user IP
 		if( !empty($opts['whitelist']) && $this->user_is_whitelisted( $opts['whitelist'] ) )
-			return;
+			return false;
 
+		return true;
+	}
+
+	/**
+	 * Perform the actual redirection
+	 * @param $redirection
+	 */
+	private function perform_redirect( $redirection ) {
+		$opts = maybe_unserialize($redirection->geotr_options);
 		// redirect one time uses cookies
 		if( (int)$opts['one_time_redirect'] === 1 ){
 			if( isset( $_COOKIE['geotr_redirect_'.$redirection->ID]) )
@@ -164,7 +177,7 @@ class Geotr_Public {
 	/**
 	 * Print placeholder in front end
 	 */
-	public function ajax_placeholder(){
+	public static function ajax_placeholder(){
 		?><!-- Geo Redirects plugin https://geotargetingwp.com-->
 		<div class="geotr-ajax" style="display: none">
 			<div>
