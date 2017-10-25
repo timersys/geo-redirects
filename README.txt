@@ -2,8 +2,8 @@
 Contributors: timersys
 Donate link: https://timersys.com
 Tags: geo redirects, geo redirection, redirect by country, geotargeting, geolite, maxmind
-Tested up to: 4.8
-Stable tag: 1.0.2.3
+Tested up to: 4.8.2
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,11 @@ Rules available:
 
 
 == Changelog ==
+
+= 1.1 =
+* Added ajax redirects for heavy cached sites
+* Update core files
+* Compatibility with WpEngine Geoip (business and enterprise plans)
 
 = 1.0.2.3 =
 * Core files didn't pack on previous version
