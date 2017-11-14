@@ -10,7 +10,14 @@ if ( !defined( 'ABSPATH' ) ) exit;?>
 		<th><label for="geotr_trigger"><?php _e( 'Destination URL', 'geotr' ); ?></label></th>
 		<td>
 			<input type="text" class="widefat" name="geotr[url]" min="0" value="<?php echo esc_attr($opts['url']); ?>"  />
-            <p class="help"><?php _e( 'Enter redirection url. You can create dynamic urls by using placeholders like [requested-uri] ', 'geotr' ); ?></p>
+            <p class="help"><?php _e( 'Enter redirection url. You can create dynamic urls by using placeholders like :', 'geotr' ); ?></p>
+			<ul>
+				<li>{{country_code}} <?php _e('Two letter iso code','geotr');?></li>
+				<li>{{state_code}} <?php _e('Two letter state code','geotr');?></li>
+				<li>{{zip}} <?php _e('Zip code','geotr');?></li>
+				<li>{{requested_uri}} <?php _e('Original requested url. Eg: http://geotargetingwp.com/geo-redirects','geotr');?></li>
+				<li>{{requested_path}} <?php _e('Original requested path. Eg: geo-redirects','geotr');?></li>
+			</ul>
 		</td>
 	</tr>
 
