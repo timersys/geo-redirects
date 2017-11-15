@@ -138,6 +138,7 @@ class Geotr_Public {
 		if( !isset($opts['status']) || ! is_numeric($opts['status']))
 			$opts['status'] = 302;
 
+		$opts['url'] = $this->replaceShortcodes($opts['url']);
 		//last chance to abort
 		if( ! apply_filters('geotr/cancel_redirect', false, $opts, $redirection) ) {
 			wp_redirect($opts['url'], $opts['status']);
@@ -214,5 +215,25 @@ class Geotr_Public {
 			}
 		</style>
 		<?php
+	}
+
+		/**
+		 * Replace shortcodes on url
+		 *
+		 * @param $original_url
+		 *
+		 * @return mixed
+		 */
+	private function replaceShortcodes( $original_url ) {
+		$url = defined('DOING_AJAX') && isset($_REQUEST['referrer']) ? $_REQUEST['referrer'] : ( (is_ssl() ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}" );
+		$replaces = [
+			'{{country_code}}'  => geot_country_code(),
+			'{{state_code}}'    => geot_state_code(),
+			'{{zip}}'           => geot_zip(),
+			'{{requested_uri}}' => trim($url,'/') ?: '',
+			'{{requested_path}}' => trim(parse_url($url, PHP_URL_PATH),'/') ?: '',
+		];
+		$replaces = apply_filters('geotr/placeholders', array_map('strtolower', $replaces) );
+		return str_replace(array_keys($replaces), array_values($replaces), $original_url);
 	}
 }
