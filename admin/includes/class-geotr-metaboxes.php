@@ -111,7 +111,7 @@ class Geotr_Metaboxes{
 		$post = get_post($post_id);
 
 		// sanitize settings
-		$opts['whitelist']	 	    = sanitize_text_field( $opts['whitelist'] );
+		$opts['whitelist']	 	    = $opts['whitelist']; // if we sanitize break lines are broken, we sanitize later
 		$opts['url']	 	        = sanitize_text_field( $opts['url'] );
 		$opts['exclude_se']         = absint( sanitize_text_field( $opts['exclude_se'] ) );
 		$opts['one_time_redirect'] 	= absint( sanitize_text_field( $opts['one_time_redirect'] ) );
