@@ -24,6 +24,12 @@ class Geotr_Public {
 	 */
 	private $redirections;
 
+	// Call geot once to init session handling
+	// otherwise it will fail with georedirects and cache mode turned on
+	public function init_geot(){
+		geot();
+	}
+
 	public function handle_redirects(){
 
 		Geotr_Rules::init();
