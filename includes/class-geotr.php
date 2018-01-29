@@ -243,7 +243,8 @@ class Geotr {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-
+		// call once
+		geot();
 		$this->public = new Geotr_Public();
 		$action_hook = defined('WP_CACHE') ? 'init' : 'wp';
 		if( ! is_admin() && ! $this->is_backend() && ! defined('DOING_AJAX') && ! defined('DOING_CRON') )
