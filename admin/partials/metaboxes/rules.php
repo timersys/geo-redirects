@@ -18,7 +18,7 @@ do_action( 'geotr/metaboxes/before_rules', $post );
 	<tr>
 		<td class="label">
 			<label for="post_type"><?php _e("Rules", 'geotr' ); ?></label>
-			<p class="description"><?php _e("Create a set of rules to determine where the popup will show", 'geotr' ); ?></p>
+			<p class="description"><?php _e("Create a set of rules to determine where the redirect will be performed", 'geotr' ); ?></p>
 		</td>
 		<td>
 			<div class="rules-groups">
