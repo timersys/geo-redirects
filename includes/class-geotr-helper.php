@@ -303,9 +303,7 @@ class Geotr_Helper {
 
 			case "taxonomy" :
 
-				$choices = array();
-				$simple_value = true;
-				$choices = apply_filters('geotr/get_taxonomies', $choices, $simple_value);
+				$choices = apply_filters('geotr/get_taxonomies', self::get_taxonomies());
 
 				break;
 
@@ -479,5 +477,52 @@ class Geotr_Helper {
 		return $rules;
 
 
+	}
+
+	/**
+	 * Get taxonomies. Used in filters rules
+	 *
+	 * @param  boolean $simple_value [description]
+	 *
+	 * @return array [type]                [description]
+	 */
+	public static function get_taxonomies( $simple_value = true ) {
+		$choices = [];
+		// vars
+		$post_types = get_post_types();
+
+
+		if($post_types)
+		{
+			foreach($post_types as $post_type)
+			{
+				$post_type_object = get_post_type_object($post_type);
+				$taxonomies = get_object_taxonomies($post_type);
+				if($taxonomies)
+				{
+					foreach($taxonomies as $taxonomy)
+					{
+						if( 'nav_menu' == $taxonomy ) continue;
+						$terms = get_terms($taxonomy, array('hide_empty' => true));
+						if($terms)
+						{
+							foreach($terms as $term)
+							{
+								$value = $taxonomy . ':' . $term->term_id;
+
+								if( $simple_value )
+								{
+									$value = $term->term_id;
+								}
+
+								$choices[$post_type_object->label . ': ' . $taxonomy][$value] = $term->name;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return $choices;
 	}
 }
