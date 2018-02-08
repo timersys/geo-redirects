@@ -53,8 +53,10 @@ class Geotr_Public {
 					continue;
 				$rules = !empty($r->geotr_rules) ? unserialize($r->geotr_rules) : array();
 				$do_redirect = Geotr_Rules::do_redirection( $rules );
-				if ( $do_redirect )
-					$this->perform_redirect($r);
+				if ( $do_redirect ) {
+					$this->perform_redirect( $r );
+					break; // ajax mode won't redirect instantly so we need to break
+				}
 			}
 		}
 	}
