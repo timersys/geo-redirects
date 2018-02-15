@@ -448,6 +448,15 @@ class Geotr_Rules {
 
 		$current_url = \GeotFunctions\get_current_url();
 
+		$wide_search = strpos($rule['value'],'*') !== false ? true : false;
+
+		if( $wide_search ) {
+			if( trim( str_replace($current_url,'', $rule['value'] ),'/') == '*' ) {
+				return ( $rule['operator'] == "==" );
+			}
+			return ! ( $rule['operator'] == "==" );
+		}
+
 		if( $rule['operator'] == "==" )
 			return ($current_url == $rule['value']);
 
@@ -482,19 +491,13 @@ class Geotr_Rules {
 	 */
 	public static function rule_match_query_string( $rule ) {
 
-		parse_str( str_replace( '?', '', self::$query_string ), $request );
-		parse_str( $rule['value'], $rule_query );
 
-		if ( is_array( $request ) && is_array( $rule_query ) ) {
-			sort( $request );
-			sort( $rule_query );
-		}
+		$found = strpos(self::query_string, str_replace('?','', $rule['value'] ) ) > -1 ? true: false;
 
-		if ( $rule['operator'] == "==" ) {
-			return ( $request == $rule_query );
-		}
+		if ( $rule['operator'] == "==" )
+			return $found;
 
-		return ( $request != $rule_query );
+		return ! $found;
 
 	}
 
