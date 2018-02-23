@@ -9,7 +9,7 @@
  * Plugin Name:       Geo Redirects
  * Plugin URI:        https://geotargetingwp/
  * Description:       Create redirects based on Countries, Cities or States. Add multiple rules
- * Version:           1.2.3
+ * Version:           1.2.4
  * Author:            Damian Logghe
  * Author URI:        https://timersys.com
  * License:           GPL-2.0+
@@ -23,7 +23,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'GEOTR_VERSION', '1.2.3');
+define( 'GEOTR_VERSION', '1.2.4');
 define( 'GEOTR_PLUGIN_FILE' , __FILE__);
 define( 'GEOTR_DIR', dirname(__FILE__));
 define( 'GEOTR_URL', plugin_dir_url(__FILE__));
