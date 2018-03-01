@@ -451,7 +451,7 @@ class Geotr_Rules {
 		$wide_search = strpos($rule['value'],'*') !== false ? true : false;
 
 		if( $wide_search ) {
-			if( trim( str_replace($current_url,'', $rule['value'] ),'/') == '*' ) {
+			if( strpos( $current_url, trim($rule['value'],'*') ) === 0 ) {
 				return ( $rule['operator'] == "==" );
 			}
 			return ! ( $rule['operator'] == "==" );
