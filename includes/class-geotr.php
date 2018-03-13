@@ -247,7 +247,7 @@ class Geotr {
 		add_action('plugins_loaded', array( $this->public, 'init_geot' ) ,-2);
 		$action_hook = defined('WP_CACHE') ? 'init' : 'wp';
 		if( ! is_admin() && ! $this->is_backend() && ! defined('DOING_AJAX') && ! defined('DOING_CRON') )
-			add_action( $action_hook, array( $this->public, 'handle_redirects' ) );
+            add_action( apply_filters('geotr/action_hook',$action_hook), array( $this->public, 'handle_redirects' ) );
 		add_action( 'wp_enqueue_scripts', array( $this->public, 'enqueue_scripts' ) );
 		add_action( 'wp_ajax_nopriv_geo_redirects', array( $this->public, 'handle_ajax_redirects' ),1 );
 		add_action( 'wp_ajax_geo_redirects', array( $this->public, 'handle_ajax_redirects' ),1 );
