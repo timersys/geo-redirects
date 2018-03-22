@@ -492,7 +492,7 @@ class Geotr_Rules {
 	public static function rule_match_query_string( $rule ) {
 
 
-		$found = strpos(self::query_string, str_replace('?','', $rule['value'] ) ) > -1 ? true: false;
+		$found = strpos(self::$query_string, str_replace('?','', $rule['value'] ) ) > -1 ? true: false;
 
 		if ( $rule['operator'] == "==" )
 			return $found;
