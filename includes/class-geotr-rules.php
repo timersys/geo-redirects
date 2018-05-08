@@ -297,11 +297,19 @@ class Geotr_Rules {
 
 		$post_id = self::$post_id;
 
-		if ( $rule['operator'] == "==" ) {
-			return ( $post_id == $rule['value'] );
-		}
+        // in case multiple ids are passed
+        $ids = array_map('trim',explode(',',$rule['value']));
 
-		return ( $post_id != $rule['value'] );
+        if($rule['operator'] == "==")
+        {
+            $match = in_array($post_id, $ids );
+        }
+        elseif($rule['operator'] == "!=")
+        {
+            $match = ! in_array($post_id, $ids );
+        }
+
+        return $match;
 
 	}
 
