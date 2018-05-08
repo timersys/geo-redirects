@@ -135,21 +135,22 @@ class Geotr_Public {
 
 		// redirect 1 per session
 		if( (int)$opts['one_time_redirect'] === 2 ){
-			$session = new GeotSession();
+            $session = new GeotSession();
 
-			if( !empty($this->session->get('geotr_redirect_'.$redirection->ID) ) )
+			if( !empty($session->get('geotr_redirect_'.$redirection->ID) ) )
 				return;
-            $this->session->set('geotr_redirect_'.$redirection->ID, true);
+            $session->set('geotr_redirect_'.$redirection->ID, true);
 		}
 
 		// status code is set?
 		if( !isset($opts['status']) || ! is_numeric($opts['status']))
 			$opts['status'] = 302;
 
-		$opts['url'] = $this->replaceShortcodes($opts['url']);
+		$opts['url'] = $this->replaceShortcodes($opts);
+
 		//last chance to abort
 		if( ! apply_filters('geotr/cancel_redirect', false, $opts, $redirection) ) {
-			wp_redirect($opts['url'], $opts['status']);
+			wp_redirect(apply_filters('geotr/final_url', $opts['url']), $opts['status']);
 			exit;
 		}
 	}
@@ -225,15 +226,20 @@ class Geotr_Public {
 		<?php
 	}
 
-		/**
-		 * Replace shortcodes on url
-		 *
-		 * @param $original_url
-		 *
-		 * @return mixed
-		 */
-	private function replaceShortcodes( $original_url ) {
-		$url = defined('DOING_AJAX') && isset($_REQUEST['referrer']) ? $_REQUEST['referrer'] : ( (is_ssl() ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}" );
+        /**
+         * Replace shortcodes on url
+         *
+         * @param $opts
+         *
+         * @return mixed
+         */
+	private function replaceShortcodes( $opts ) {
+		$url = defined('DOING_AJAX') && isset($_REQUEST['url']) ? $_REQUEST['url'] : ( (is_ssl() ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}" );
+
+		// remove query string from URL
+		$query_string = parse_url($url, PHP_URL_QUERY);
+        $url = str_replace('?'.$query_string,'',$url);
+
 		$replaces = [
 			'{{country_code}}'  => geot_country_code(),
 			'{{state_code}}'    => geot_state_code(),
@@ -241,7 +247,15 @@ class Geotr_Public {
 			'{{requested_uri}}' => trim($url,'/') ?: '',
 			'{{requested_path}}' => trim(parse_url($url, PHP_URL_PATH),'/') ?: '',
 		];
+		// do the replaces
 		$replaces = apply_filters('geotr/placeholders', array_map('strtolower', $replaces) );
-		return str_replace(array_keys($replaces), array_values($replaces), $original_url);
-	}
+		$url = str_replace(array_keys($replaces), array_values($replaces), $opts['url']);
+		// add back query string
+        if( isset($opts['pass_query_string']) && $opts['pass_query_string'] == 1 ){
+            return $url . '?'. $query_string;
+        }
+
+        return $url;
+    }
+
 }
