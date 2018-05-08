@@ -9,6 +9,7 @@
  * @package    Geotr
  * @subpackage Geotr/public
  */
+use GeotFunctions\Session\GeotSession;
 use function GeotFunctions\textarea_to_array;
 use function GeotWP\getUserIP;
 use function GeotWP\is_session_started;
@@ -134,12 +135,11 @@ class Geotr_Public {
 
 		// redirect 1 per session
 		if( (int)$opts['one_time_redirect'] === 2 ){
-			if( ! is_session_started() )
-				session_start();
+			$session = new GeotSession();
 
-			if( isset( $_SESSION['geotr_redirect_'.$redirection->ID]) )
+			if( !empty($this->session->get('geotr_redirect_'.$redirection->ID) ) )
 				return;
-			$_SESSION['geotr_redirect_'.$redirection->ID] = true;
+            $this->session->set('geotr_redirect_'.$redirection->ID, true);
 		}
 
 		// status code is set?
