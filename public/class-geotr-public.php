@@ -135,7 +135,7 @@ class Geotr_Public {
 
 		// redirect 1 per session
 		if( (int)$opts['one_time_redirect'] === 2 ){
-            $session = new GeotSession();
+            $session = geot()->getSession();
 
 			if( !empty($session->get('geotr_redirect_'.$redirection->ID) ) )
 				return;
