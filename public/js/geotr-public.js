@@ -6,6 +6,7 @@
                 action : 'geo_redirects',
                 pid : geotr.pid,
                 referrer : document.referrer,
+                url : window.location.href,
                 query_string : document.location.search,
                 is_category : geotr.is_category,
                 is_archive : geotr.is_archive,

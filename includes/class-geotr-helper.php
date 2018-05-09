@@ -436,6 +436,7 @@ class Geotr_Helper {
 			'url'			    => '',
 			'one_time_redirect'	=> '',
 			'exclude_se'		=> '',
+			'pass_query_string'	=> '',
 			'whitelist'			=> '',
 			'status'			=> 302,
 		);
