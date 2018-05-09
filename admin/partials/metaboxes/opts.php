@@ -44,9 +44,9 @@ if ( !defined( 'ABSPATH' ) ) exit;?>
 		</td>
 	</tr>
 	<tr valign="top">
-		<th><label for="geotr_trigger"><?php _e( 'Pass query string ?', 'geotr' ); ?></label></th>
+		<th><label for="pass_query"><?php _e( 'Pass query string ?', 'geotr' ); ?></label></th>
 		<td>
-			<select id="exclude_se" name="geotr[pass_query_string]" class="widefat">
+			<select id="pass_query" name="geotr[pass_query_string]" class="widefat">
 				<option value="1" <?php selected($opts['pass_query_string'], '1'); ?> > <?php _e( 'Yes', 'geotr' ); ?></option>
 				<option value="0" <?php selected($opts['pass_query_string'], '0'); ?> > <?php _e( 'No', 'geotr' ); ?></option>
 			</select>
