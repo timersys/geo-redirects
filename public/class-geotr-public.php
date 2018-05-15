@@ -251,7 +251,7 @@ class Geotr_Public {
 		$replaces = apply_filters('geotr/placeholders', array_map('strtolower', $replaces) );
 		$url = str_replace(array_keys($replaces), array_values($replaces), $opts['url']);
 		// add back query string
-        if( isset($opts['pass_query_string']) && $opts['pass_query_string'] == 1 ){
+        if( isset($opts['pass_query_string']) && $opts['pass_query_string'] == 1 && !empty($query_string)){
             return $url . '?'. $query_string;
         }
 
