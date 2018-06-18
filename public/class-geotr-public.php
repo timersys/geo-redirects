@@ -255,7 +255,7 @@ class Geotr_Public {
             return $url . '?'. $query_string;
         }
 
-        return $url;
+        return apply_filters('geotr/shortcodes_url',$url, $opts );
     }
 
 }
