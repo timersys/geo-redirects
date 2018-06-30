@@ -3,7 +3,7 @@ Contributors: timersys
 Donate link: https://timersys.com
 Tags: geo redirects, geo redirection, redirect by country, geotargeting, geolite, maxmind
 Tested up to: 4.9.6
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,10 @@ Rules available:
 
 
 == Changelog ==
+
+= 1.3.2 =
+* Fixed core bug that on certain php version geo target function won't return results
+* Added cache bust for admin assets
 
 = 1.3.1 =
 * Improved settings page and regions creation

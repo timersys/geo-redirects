@@ -214,7 +214,7 @@ class Geotr {
 		Geotr_Rules::set_rules_fields();
 
 		add_filter('geot/plugin_version', function (){ return GEOTR_VERSION;});
-		
+
 		add_filter( 'plugin_action_links_' . GEOTR_PLUGIN_HOOK, array( $this->admin, 'add_action_links' ) );
 		add_action( 'add_meta_boxes_geotr_cpt', array( $metaboxes, 'add_meta_boxes' ) );
 		add_action( 'save_post_geotr_cpt', array( $metaboxes, 'save_meta_options' ) );
