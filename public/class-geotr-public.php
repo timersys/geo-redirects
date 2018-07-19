@@ -13,6 +13,7 @@ use GeotFunctions\Session\GeotSession;
 use function GeotFunctions\textarea_to_array;
 use function GeotWP\getUserIP;
 use function GeotWP\is_session_started;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
 
 /**
  * @package    Geotr
@@ -109,9 +110,16 @@ class Geotr_Public {
 			return false;
 
 		$opts = maybe_unserialize($redirection->geotr_options);
-
+		// check for destination url
 		if( empty( $opts['url'] ) )
 			return false;
+		
+		// check for crawlers
+		if( isset($opts['exclude_se']) && '1' === $opts['exclude_se'] ) {
+			$detect = new CrawlerDetect();
+			if( $detect->isCrawler() )
+				return false;
+		}
 
 		// check user IP
 		if( !empty($opts['whitelist']) && $this->user_is_whitelisted( $opts['whitelist'] ) )
