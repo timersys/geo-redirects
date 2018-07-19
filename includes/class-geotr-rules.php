@@ -15,6 +15,7 @@ class Geotr_Rules {
 	private static $is_category;
 	private static $is_archive;
 	private static $is_search;
+	private static $current_url;
 
 	public static function init() {
 
@@ -22,6 +23,7 @@ class Geotr_Rules {
 		self::$detect       = new Mobile_Detect;
 		self::$referrer     = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : '';
 		self::$query_string = isset( $_SERVER['QUERY_STRING'] ) ? $_SERVER['QUERY_STRING'] : '';
+		self::$current_url  = \GeotFunctions\get_current_url();
 
 		if( defined('DOING_AJAX') ) {
 
@@ -42,6 +44,9 @@ class Geotr_Rules {
 			}
 			if( !empty( $_REQUEST['is_search'] ) ) {
 				self::$is_search = true;
+			}
+			if( !empty( $_REQUEST['url'] ) ) {
+				self::$current_url  = $_REQUEST['url'];
 			}
 		}
 		// Geotargeting
@@ -454,21 +459,19 @@ class Geotr_Rules {
 	 */
 	public static function rule_match_custom_url( $rule ) {
 
-		$current_url = \GeotFunctions\get_current_url();
-
 		$wide_search = strpos($rule['value'],'*') !== false ? true : false;
 
 		if( $wide_search ) {
-			if( strpos( $current_url, trim($rule['value'],'*') ) === 0 ) {
+			if( strpos( self::$current_url, trim($rule['value'],'*') ) === 0 ) {
 				return ( $rule['operator'] == "==" );
 			}
 			return ! ( $rule['operator'] == "==" );
 		}
 
 		if( $rule['operator'] == "==" )
-			return ($current_url == $rule['value']);
+			return (self::$current_url == $rule['value']);
 
-		return ! ($current_url == $rule['value']);
+		return ! (self::$current_url == $rule['value']);
 
 	}
 	/**
@@ -573,10 +576,10 @@ class Geotr_Rules {
 			}
 
 			if ( $rule['operator'] == "==" ) {
-				return (home_url() == \GeotFunctions\get_current_url());
+				return (home_url() == self::$current_url);
 			}
 
-			return ! (home_url() == \GeotFunctions\get_current_url());
+			return ! (home_url() == self::$current_url);
 
 
 		} elseif ( $rule['value'] == 'category_page' ) {
