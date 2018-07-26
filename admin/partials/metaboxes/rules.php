@@ -99,7 +99,8 @@ do_action( 'geotr/metaboxes/before_rules', $post );
                 	<a class="button rules-add-group" href="#"><?php _e("Add rule group (+ OR)", 'geotr' ); ?></a>
 
                 <?php endif; ?>
-				<p style="margin-top: 30px">* <?= __('Redirection rules marked with an asterisk won\'t work if you are using page cache plugin. <strong>Cache plugin detected:</strong>','geotr');?> <?= defined('WP_CACHE') ? __('true') : __('false');?></p>
+				<p style="margin-top: 30px"><strong>Important:</strong> <?= __('Remember to add your Geotargeting rules at the end. Rules are fired in order and you will burn credits if you place them first.','geotr');?></p>
+				<p><?= __('Redirection rules marked with an asterisk * won\'t work if you are using page cache plugin.','geotr');?></p>
 				<p> <?= sprintf(__('Learn more about redirections and compatible cache plugins <a href="%s" target="_blank">here</a>','geotr'), 'https://geotargetingwp.com/docs/geotargetingwp/cache');?> </p>
 			</div>
 		</td>
