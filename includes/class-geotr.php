@@ -317,6 +317,7 @@ class Geotr {
 			'show_ui'            => true,
 			'show_in_menu'       => 'geot-settings',
 			'query_var'          => true,
+			'exclude_from_search'=> true,
 			'rewrite'            => array( 'slug' => 'geotr_cpt' ),
 			'capability_type'    => 'post',
 			'capabilities' => array(

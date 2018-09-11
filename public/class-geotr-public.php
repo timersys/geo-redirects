@@ -38,7 +38,7 @@ class Geotr_Public {
 		$this->redirections = $this->get_redirections();
 		$opts = geotr_settings();
 		if( !empty( $opts['ajax_mode'] ) )
-			add_action( 'wp_footer', [ 'Geotr_Public', 'ajax_placeholder' ] );
+			add_action( 'wp_footer', [ $this, 'ajax_placeholder' ] );
 		else
 			$this->check_for_rules();
 	}
@@ -199,11 +199,13 @@ class Geotr_Public {
 		?><!-- Geo Redirects plugin https://geotargetingwp.com-->
 		<div class="geotr-ajax" style="display: none">
 			<div>
+				<?php do_action('geotr/ajax_placeholder');?>
 				<img src="<?php echo plugin_dir_url(__FILE__);?>img/loading.svg" alt="loading"/>
-				<?php _e('Please wait while you are redirected to the right page...', 'geotr');?>
+				<p><?php _e('Please wait while you are redirected to the right page...', 'geotr');?></p>
 			</div>
 		</div>
 		<style>
+			<?php do_action('geotr/ajax_placeholder_styles');?>
 			.geotr-ajax{
 				position: fixed;
 				width: 100%;
