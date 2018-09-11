@@ -10,7 +10,7 @@
  * Plugin URI:        https://geotargetingwp.com/
  * Description:       Create redirects based on Countries, Cities or States. Add multiple rules
  * Version:           1.3.2.3
- * Author:            Damian Logghe
+ * Author:            Timersys
  * Author URI:        https://timersys.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
