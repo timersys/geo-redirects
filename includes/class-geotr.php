@@ -222,7 +222,6 @@ class Geotr {
 		add_action( 'admin_enqueue_scripts', array( $this->admin, 'enqueue_scripts' ) );
 
 		// Settings
-		add_action( 'admin_menu' , [ $this->admin, 'add_settings_menu' ],8);
 		add_action( 'admin_init', [ $this->admin, 'save_settings' ] );
 
 		//AJAX Actions

@@ -46,9 +46,20 @@ class Geotr_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
+		add_filter('geot/settings_tabs', [$this, 'add_tab']);
+		add_action('geot/settings_geo-redirects_panel', [ $this, 'settings_page'] );
 	}
 
+	/**
+	 * Register tab for settings page
+	 * @param $tabs
+	 *
+	 * @return mixed
+	 */
+	function add_tab( $tabs ){
+		$tabs['geo-redirects'] = ['name' => 'Geo Redirects'];
+		return $tabs;
+	}
 
 	/**
 	 * Register the JavaScript for the admin area.
@@ -77,16 +88,6 @@ class Geotr_Admin {
 					'opts'      => Geotr_Helper::get_options($post_id)
 				)
 		);
-	}
-
-	/**
-	 * Add menu for Settings page of the plugin
-	 * @since  1.0.3
-	 * @return  void
-	 */
-	public function add_settings_menu() {
-
-		add_submenu_page( 'geot-settings', 'Redirects Settings', 'Redirects Settings', apply_filters( 'geotr/settings_page_role', 'manage_options'), 'geotr-settings',array($this, 'settings_page') );
 	}
 
 	/**

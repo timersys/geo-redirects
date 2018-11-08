@@ -1,5 +1,4 @@
 <div class="wrap geot-settings">
-	<h2>Geo Redirects v <?= GEOTR_VERSION;?></h2>
 	<form name="geot-settings" method="post" enctype="multipart/form-data">
 		<table class="form-table">
 			<tr valign="top" class="">
