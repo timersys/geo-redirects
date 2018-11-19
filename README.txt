@@ -36,6 +36,8 @@ Rules available:
 
 = 1.3.4.1 =
 * Updated core files to try prevent bots consuption
+* Added zip rule
+* Added cookie rule
 
 = 1.3.4 =
 * Updated core files and settings page
