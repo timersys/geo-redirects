@@ -55,6 +55,7 @@ class Geotr_Rules {
 		add_filter( 'geotr/rules/rule_match/city', array( self::class, 'rule_match_city' ) );
 		add_filter( 'geotr/rules/rule_match/city_region', array( self::class, 'rule_match_city_region' ) );
 		add_filter( 'geotr/rules/rule_match/state', array( self::class, 'rule_match_state' ) );
+		add_filter( 'geotr/rules/rule_match/zip', array( self::class, 'rule_match_zip' ) );
 
 		// User
 		add_filter( 'geotr/rules/rule_match/user_type', array( self::class, 'rule_match_user_type') );
@@ -80,6 +81,7 @@ class Geotr_Rules {
 
 		//Other
 		add_filter( 'geotr/rules/rule_match/custom_url', array( self::class, 'rule_match_custom_url') );
+		add_filter( 'geotr/rules/rule_match/cookie', array( self::class, 'rule_match_cookie') );
 		add_filter( 'geotr/rules/rule_match/mobiles', array( self::class, 'rule_match_mobiles') );
 		add_filter( 'geotr/rules/rule_match/tablets', array( self::class, 'rule_match_tablets') );
 		add_filter( 'geotr/rules/rule_match/desktop', array( self::class, 'rule_match_desktop') );
@@ -132,6 +134,7 @@ class Geotr_Rules {
 		add_action( 'geotr/rules/print_city_region_field', array( 'Geotr_Helper', 'print_select' ), 10, 2 );
 		add_action( 'geotr/rules/print_city_field', array( 'Geotr_Helper', 'print_textfield' ), 10, 2 );
 		add_action( 'geotr/rules/print_state_field', array( 'Geotr_Helper', 'print_textfield' ), 10, 1 );
+		add_action( 'geotr/rules/print_zip_field', array( 'Geotr_Helper', 'print_textfield' ), 10, 1 );
 
 		// User
 		add_action( 'geotr/rules/print_user_type_field', array( 'Geotr_Helper', 'print_select' ), 10, 2 );
@@ -163,6 +166,7 @@ class Geotr_Rules {
 		add_action( 'geotr/rules/print_crawlers_field', array( 'Geotr_Helper', 'print_select' ), 10, 2 );
 		add_action( 'geotr/rules/print_referrer_field', array( 'Geotr_Helper', 'print_textfield' ), 10, 1 );
 		add_action( 'geotr/rules/print_query_string_field', array( 'Geotr_Helper', 'print_textfield' ), 10, 1 );
+		add_action( 'geotr/rules/print_cookie_field', array( 'Geotr_Helper', 'print_textfield' ), 10, 1 );
 	}
 
 	/**
@@ -177,6 +181,7 @@ class Geotr_Rules {
 				'city'           => __( 'City', 'geotr' ),
 				'city_region'    => __( 'City Region', 'geotr' ),
 				'state'          => __( 'State', 'geotr' ),
+				'zip'            => __( 'Zip Code', 'geotr' ),
 			),
 			__( "User", 'geotr' )         => array(
 				'user_type'     => __( "User role", 'geotr' ),
@@ -202,6 +207,7 @@ class Geotr_Rules {
 			),
 			__( "Other", 'geotr' )        => array(
 				'custom_url'   => __( "Custom Url", 'geotr' ),
+				'cookie'       => __( "Cookie exists", 'geotr' ),
 				'referrer'     => __( "Referrer", 'geotr' ),
 				'query_string' => __( "Query String", 'geotr' ),
 				'mobiles'      => __( "Mobile Phone", 'geotr' ),
@@ -290,6 +296,20 @@ class Geotr_Rules {
 		}
 
 		return ( ! geot_target_city('', $rule['value'] ) );
+
+	}
+
+	/*
+	* rule_match_zip
+	* @since 1.0.0
+	*/
+	public static function rule_match_zip( $rule ) {
+		$zip = geot_zip();
+		if ( $rule['operator'] == "==" ) {
+			return ( $zip == $rule['value'] );
+		}
+
+		return ( $zip != $rule['value'] );
 
 	}
 
@@ -868,5 +888,19 @@ class Geotr_Rules {
 
 		return ! ( is_array( $terms ) && in_array( $rule['value'], $terms ) );
 
+	}
+
+	/**
+	 * Match cookies 
+	 * @param $rule
+	 * @return bool
+	 */
+	public static function rule_match_cookie( $rule ) {
+
+		if ( $rule['operator'] == "==" ) {
+			return isset(  $_COOKIE[$rule['value']] );
+		}
+
+		return ! isset(  $_COOKIE[$rule['value']] );
 	}
 }
