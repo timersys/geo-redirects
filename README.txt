@@ -2,8 +2,8 @@
 Contributors: timersys
 Donate link: https://timersys.com
 Tags: geo redirects, geo redirection, redirect by country, geotargeting, geolite, maxmind
-Tested up to: 4.9.8
-Stable tag: 1.3.4.2
+Tested up to: 502
+Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,10 @@ Rules available:
 
 
 == Changelog ==
+
+= 1.3.5 =
+* Fixed uninstall
+* Reorganized settings
 
 = 1.3.4.2 =
 * Hotfix for bug introduced in 2.3.6.1 ( Important update! )
