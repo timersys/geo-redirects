@@ -110,8 +110,11 @@ class Geotr_Public {
 			return false;
 
 		$opts = maybe_unserialize($redirection->geotr_options);
+
+		$current_url = \GeotFunctions\get_current_url();
+
 		// check for destination url
-		if( empty( $opts['url'] ) )
+		if( empty( $opts['url'] ) || $current_url == $opts['url'] )
 			return false;
 		
 		// check for crawlers
