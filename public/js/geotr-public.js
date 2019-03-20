@@ -1,6 +1,14 @@
 (function( $ ) {
 	'use strict';
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const geot_debug = urlParams.get('geot_debug'),
+     geot_debug_iso  = urlParams.get('geot_debug_iso'),
+     geot_state  = urlParams.get('geot_state'),
+     geot_state_code  = urlParams.get('geot_state_code'),
+     geot_city  = urlParams.get('geot_city'),
+     geot_zip  = urlParams.get('geot_zip');
+
 	if( $('.geotr-ajax').length ) {
         var data = {
                 action : 'geo_redirects',
@@ -11,7 +19,13 @@
                 is_category : geotr.is_category,
                 is_archive : geotr.is_archive,
                 is_front_page : geotr.is_front_page,
-                is_search : geotr.is_search
+                is_search : geotr.is_search,
+                geot_debug : geot_debug,
+                geot_debug_iso  : geot_debug_iso,
+                geot_state  : geot_state,
+                geot_state_code  : geot_state_code,
+                geot_city  : geot_city,
+                geot_zip  : geot_zip
             }
             ,success_cb = function(response) {
                 if( response && response.url ){
