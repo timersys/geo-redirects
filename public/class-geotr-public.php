@@ -262,13 +262,18 @@ class Geotr_Public {
 		];
 		// do the replaces
 		$replaces = apply_filters('geotr/placeholders', array_map('strtolower', $replaces) );
-		$url = str_replace(array_keys($replaces), array_values($replaces), $opts['url']);
+		$final_url = str_replace(array_keys($replaces), array_values($replaces), $opts['url']);
 		// add back query string
-        if( isset($opts['pass_query_string']) && $opts['pass_query_string'] == 1 && !empty($query_string)){
-            return $url . '?'. $query_string;
+        if( isset($opts['pass_query_string']) && $opts['pass_query_string'] == 1 && !empty($query_string) ){
+        	// check if a query string already exist in final url
+        	if( strpos($final_url, '?') !== false ){
+		        return $final_url . '&'. $query_string;
+	        } else {
+		        return $final_url . '?'. $query_string;
+	        }
         }
 
-        return apply_filters('geotr/shortcodes_url',$url, $opts );
+        return apply_filters('geotr/shortcodes_url',$final_url, $opts, $url );
     }
 
 }
