@@ -481,18 +481,20 @@ class Geotr_Rules {
 
 		$wide_search = strpos($rule['value'],'*') !== false ? true : false;
 
+		$custom_url = untrailingslashit(preg_replace('#^https?://#', '', $rule['value']));
+		$current_url = untrailingslashit(preg_replace('#^https?://#', '', self::$current_url));
+
 		if( $wide_search ) {
-			if( strpos( self::$current_url, trim($rule['value'],'*') ) === 0 ) {
+			if( strpos( $current_url, trim($custom_url,'*') ) === 0 ) {
 				return ( $rule['operator'] == "==" );
 			}
 			return ! ( $rule['operator'] == "==" );
 		}
 
 		if( $rule['operator'] == "==" )
-			return (self::$current_url == $rule['value']);
+			return ($current_url == $custom_url);
 
-		return ! (self::$current_url == $rule['value']);
-
+		return ! ($current_url == $custom_url);
 	}
 	/**
 	 * Check for crawlers / bots
