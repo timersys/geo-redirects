@@ -158,7 +158,7 @@ class Geotr_Public {
 			$opts['status'] = 302;
 
 		$opts['url'] = $this->replaceShortcodes($opts);
-		$opts['url'] = $this->verify_redirect($opts['url']);
+		$opts['url'] = $this->fixRedirect($opts['url']);
 
 		//last chance to abort
 		if( ! apply_filters('geotr/cancel_redirect', false, $opts, $redirection) ) {
@@ -170,7 +170,7 @@ class Geotr_Public {
 	/**
 	*	Verify if the URL has protocol
 	*/
-	public function verify_redirect($redirect) {
+	public function fixRedirect($redirect) {
 
 		$site = preg_replace('#^https?://#', '', site_url());
 
