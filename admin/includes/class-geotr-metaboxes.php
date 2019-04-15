@@ -120,25 +120,38 @@ class Geotr_Metaboxes{
 		// save box settings
 		update_post_meta( $post_id, 'geotr_options', apply_filters( 'geotr/metaboxes/sanitized_options', $opts ) );
 
+		$keys_geot = apply_filters('geotr/metaboxes/keys_geot', array('country', 'country_region', 'city', 'city_region', 'state', 'zip'));
+
 		// Start with rules
-		if( isset($_POST['geotr_rules']) && is_array($_POST['geotr_rules']) )
-		{
+		if( isset($_POST['geotr_rules']) && is_array($_POST['geotr_rules']) ) {
+
 			// clean array keys
 			$groups = array_values( $_POST['geotr_rules'] );
 			unset( $_POST['geotr_rules'] );
 
-			foreach($groups as $group_id => $group )
-			{
-				if( is_array($group) )
-				{
-					// clean array keys
-					$groups_a[] = array_values( $group );
+			$output_groups = array();
 
+			foreach($groups as $group_id => $group ) {
+				if( is_array($group) ) {
+
+					$output_geot = array();
+					$group_wkey = array_values( $group );
+
+					foreach( $group_wkey as $item_key => $items ) {
+						if( in_array($items['param'], $keys_geot) )
+							$output_geot[] = $items;
+						else
+							$output_groups[$group_id][] = $items;
+					}
+
+					if( count($output_geot) > 0 ) {
+						foreach($output_geot as $item_geot)
+							$output_groups[$group_id][] = $item_geot;
+					}
 				}
 			}
 
-			update_post_meta( $post_id, 'geotr_rules', apply_filters( 'geotr/metaboxes/sanitized_rules', $groups_a ) );
-
+			update_post_meta( $post_id, 'geotr_rules', apply_filters( 'geotr/metaboxes/sanitized_rules', $output_groups ) );
 		}
 	}
 
