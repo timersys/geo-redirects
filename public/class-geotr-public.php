@@ -158,6 +158,7 @@ class Geotr_Public {
 			$opts['status'] = 302;
 
 		$opts['url'] = $this->replaceShortcodes($opts);
+		$opts['url'] = $this->fixRedirect($opts['url']);
 
 		//last chance to abort
 		if( ! apply_filters('geotr/cancel_redirect', false, $opts, $redirection) ) {
@@ -165,6 +166,27 @@ class Geotr_Public {
 			exit;
 		}
 	}
+
+	/**
+	*	Verify if the URL has protocol
+	*/
+	public function fixRedirect($redirect) {
+
+		$site = preg_replace('#^https?://#', '', site_url());
+
+		$site_scheme = parse_url(site_url(), PHP_URL_SCHEME);
+		$redirect_scheme = parse_url($redirect, PHP_URL_SCHEME);
+
+		if( strpos( $redirect, $site) !== FALSE && $site_scheme != $redirect_scheme ) { //internal URL
+			$redirect = str_replace($redirect_scheme, $site_scheme, $redirect);
+		}
+		elseif(empty($redirect_scheme)) { //external URL without scheme
+			$redirect = 'http://' . $redirect;
+		}
+
+		return $redirect;
+	}
+
 	/**
 	 * Enqueue script file
 	 */
