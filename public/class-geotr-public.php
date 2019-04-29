@@ -114,7 +114,7 @@ class Geotr_Public {
 		$current_url = \GeotFunctions\get_current_url();
 
 		// check for destination url
-		if( empty( $opts['url'] ) || $current_url == $opts['url'] )
+		if( empty( $opts['url'] ) || $current_url == $this->replaceShortcodes($opts) )
 			return false;
 		
 		// check for crawlers
@@ -212,7 +212,7 @@ class Geotr_Public {
 	 */
 	private function user_is_whitelisted( $ips ) {
 		$ips = textarea_to_array( $ips );
-		if( in_array( getUserIP(), apply_filters( 'geotr/whitelist_ips', $ips ) ) )
+		if( in_array( apply_filters( 'geot/user_ip', getUserIP()), apply_filters( 'geotr/whitelist_ips', $ips ) ) )
 			return true;
 		return false;
 	}
