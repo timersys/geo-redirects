@@ -116,10 +116,11 @@ class Geotr_Public {
 		// check for destination url
 		if( empty( $opts['url'] ) || $current_url == $this->replaceShortcodes($opts) )
 			return false;
-		
+
 		// check for crawlers
-		if( isset($opts['exclude_se']) && '1' === $opts['exclude_se'] ) {
+		if( isset($opts['exclude_se']) && 1 === absint( $opts['exclude_se'] ) ) {
 			$detect = new CrawlerDetect();
+
 			if( $detect->isCrawler() )
 				return false;
 		}
