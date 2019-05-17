@@ -3,7 +3,7 @@ Contributors: timersys
 Donate link: https://timersys.com
 Tags: geo redirects, geo redirection, redirect by country, geotargeting, geolite, maxmind
 Tested up to: 5.1.1
-Stable tag: 1.3.7.2
+Stable tag: 1.3.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,9 @@ Rules available:
 
 
 == Changelog ==
+= 1.3.7.3 =
+* Fixed custom url no redirecting for parent page
+
 = 1.3.7.2 =
 * Fixed issue on redirects validation that was firing unnecesary requests when {{country_code}} exist in destination url
 = 1.3.7.1 =
