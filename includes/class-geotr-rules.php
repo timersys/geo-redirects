@@ -485,7 +485,7 @@ class Geotr_Rules {
 		$current_url = untrailingslashit(preg_replace('#^https?://#', '', self::$current_url));
 
 		if( $wide_search ) {
-			if( strpos( $current_url, trim($custom_url,'*') ) === 0 ) {
+			if( strpos( $current_url, trim($custom_url,'*/') ) === 0 ) {
 				return ( $rule['operator'] == "==" );
 			}
 			return ! ( $rule['operator'] == "==" );
